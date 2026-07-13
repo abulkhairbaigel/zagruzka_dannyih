@@ -1,5 +1,6 @@
-# Теперь можно добавить в график низкую температуру.
-# Чтобы ее добавить нам нужно извлечь информацию о ней из файла.  
+# Можно затушевать диапозон между tmax и tmin.
+# Для этого мы используем метод fill_between(), который получает серию значений x,
+# 2 серии значений y и заполняет область между 2-умя значениями y.  
 
 from pathlib import Path
 import csv
@@ -14,11 +15,11 @@ reader = csv.reader(lines)
 header_row = next(reader)
 
 # Извлечение дат, минимальных и максимальных температур из файла.
-dates, highs, lows = [], [], []    # создается список lows для хранения мин. температур.
+dates, highs, lows = [], [], []
 for row in reader:
     current_date = datetime.strptime(row[2], '%Y-%m-%d')
     high = int(row[4])
-    low = int(row[5])   # программа извлекает и сохраняет минимум t для каждой даты из 6-ой позиции каждой строки данных
+    low = int(row[5])
     dates.append(current_date)
     highs.append(high)
     lows.append(low)
@@ -26,11 +27,15 @@ for row in reader:
 # Создание диаграммы высоких и низких температур.
 plt.style.use('Solarize_Light2')
 fig, ax = plt.subplots()
-ax.plot(dates, highs, color='red')
-ax.plot(dates, lows, color='blue')   # вызов plot() окрашивают мин. t в синий цвет
+# Аргумент alpha определяет степень прозрачности вывода (0 - это полная прозрачность, 1 - непрозрачность):
+ax.plot(dates, highs, color='red', alpha=0.5)
+ax.plot(dates, lows, color='blue', alpha=0.5)
+ax.fill_between(dates, highs, lows, facecolor='blue', alpha=0.1)
+# Список dates передается для значения x, и 2 серии значения y - highs и lows.
+# Аргумент facecolor определяет цвет закрашиваемой области. Передаем этой области прозрачность, чтобы не отвлекать смотрящего. 
 
 # Форматирование диаграммы.
-ax.set_title("Ежедневная максимальная и минимальные температуры, 2021", fontsize=24)   # обновляем заголовок диаграммы.
+ax.set_title("Ежедневная максимальная и минимальные температуры, 2021", fontsize=24)
 ax.set_xlabel('', fontsize=16)
 fig.autofmt_xdate()
 ax.set_ylabel("Температура (Фаренгейт)", fontsize=16)
