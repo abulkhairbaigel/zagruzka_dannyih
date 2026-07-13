@@ -1,7 +1,3 @@
-# Можно затушевать диапозон между tmax и tmin.
-# Для этого мы используем метод fill_between(), который получает серию значений x,
-# 2 серии значений y и заполняет область между 2-умя значениями y.  
-
 from pathlib import Path
 import csv
 from datetime import datetime
@@ -27,12 +23,9 @@ for row in reader:
 # Создание диаграммы высоких и низких температур.
 plt.style.use('Solarize_Light2')
 fig, ax = plt.subplots()
-# Аргумент alpha определяет степень прозрачности вывода (0 - это полная прозрачность, 1 - непрозрачность):
 ax.plot(dates, highs, color='red', alpha=0.5)
 ax.plot(dates, lows, color='blue', alpha=0.5)
 ax.fill_between(dates, highs, lows, facecolor='blue', alpha=0.1)
-# Список dates передается для значения x, и 2 серии значения y - highs и lows.
-# Аргумент facecolor определяет цвет закрашиваемой области. Передаем этой области прозрачность, чтобы не отвлекать смотрящего. 
 
 # Форматирование диаграммы.
 ax.set_title("Ежедневная максимальная и минимальные температуры, 2021", fontsize=24)
