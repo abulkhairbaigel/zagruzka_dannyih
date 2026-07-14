@@ -28,7 +28,7 @@ ax.plot(dates, lows, color='blue', alpha=0.5)
 ax.fill_between(dates, highs, lows, facecolor='blue', alpha=0.1)
 
 # Форматирование диаграммы.
-ax.set_title("Ежедневная максимальная и минимальные температуры, 2021", fontsize=24)
+ax.set_title("Ежедневная максимальная и минимальные температуры, Ситка США 2021", fontsize=24)
 ax.set_xlabel('', fontsize=16)
 fig.autofmt_xdate()
 ax.set_ylabel("Температура (Фаренгейт)", fontsize=16)
